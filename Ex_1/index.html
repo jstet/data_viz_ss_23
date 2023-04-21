@@ -1,35 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Exercise 1: Web Development Basics</title>
-    <!-- TASK 2A): Create a link that to load the index.css file below this comment -->
-  </head>
 
-  <body>
-    <!-- TASK 2B): Assign an identifier (id) to the div container below to style it using the index.css file -->
-    <div>
-      <h1>Exercise 1: Web Development Basics</h1>
-      <h4>Contributors: -</h2>
-      <p>What is a div container in HTML?: -</p>
-    </div>
+<head>
+  <title>Exercise 1: Web Development Basics</title>
+  <!-- TASK 2A): Create a link that to load the index.css file below this comment -->
+  <link rel="stylesheet" href="index.css" type="text/css">
+  <!-- TASK 3A): Create a script tag to load index.js file below this comment.-->
+  <script src="index.js"></script>
+
+</head>
+
+<body>
+  <!-- TASK 2B): Assign an identifier (id) to the div container below to style it using the index.css file -->
+  <div id="head_elements">
+    <h1>Exercise 1: Web Development Basics</h1>
+    <h4>Contributors: </h4>
+    <p>
+      - Jonas Stettner<br>
+      - Ana Sanchez Acosta
+    </p>
+    <p>What is a div container in HTML?: -</p>
+    <p>
+      Is a container, that groups any type of elements.<br>
+      'div' stands for division and it is used to organize and structure content on an Webpage.<br>
+      One can apply styles to the whole container. <br>
+    </p>
+
+    <h4>Uses of Data visualization</h4>
+    <ul>
+      <li>Reporting of important KPIs in bussiness.</li>
+      <li>In politics to support arguments, for example visualize statistis of the population.</li>
+      <li>For marketing purposes to show data to the costumers.</li>
+    </ul>
 
     <hr>
 
     <!-- TASK 3B): Add a svg inside of the div. Add a circle, a rectangle and a line -->
+    <svg height="500" width="500">
+      <circle cx="250" cy="250" r="50" stroke-width="2" fill="red" />
+      <rect x="150" y="150" width="50" height="50" fill="blue" />
+      <path id="pth" d="M 20,100 40,10 70,100 430,100 470,10 490,100 250,390 Z" stroke="black" stroke-width="2px"
+        fill="none" />
 
 
-    <!-- Task 1B): Add a list of at least 3 elements, each list element shoud be a an application of data visualization in real life -->
 
-    <!-- TASK 4: Add a div container and assign an identifier (id) to it, such that you can access it via JavaScript in the index.js file -->
+    </svg>
+  </div>
+  <!-- Task 1B): Add a list of at least 3 elements, each list element shoud be a an application of data visualization in real life -->
+  <h3>List of data viz applications in real life:</h3>
+  <ul>
+    <li>Google Maps</li>
+    <li>Tageschau Wettervorhersage</li>
+    <li>Corona WarnApp</li>
+  </ul>
+  <!-- TASK 4: Add a div container and assign an identifier (id) to it, such that you can access it via JavaScript in the index.js file -->
+  <div id="eyedee"></div>
 
-    <!-- TASK 3A): Create a script tag to load index.js file below this comment.-->
-  </body>
+</body>
 
-  
-  
-  
-  <!-- You can ignore this code for your exercise! A footer which should indicate if the css style file is sucessfully loaded (by becoming visible when styled by the .footer-text class).-->
-  <!-- <footer style="position: fixed; bottom: 0px; text-align: center; width: 100%; height:40px; background-color: aliceblue;">
+
+
+
+<!-- You can ignore this code for your exercise! A footer which should indicate if the css style file is sucessfully loaded (by becoming visible when styled by the .footer-text class).-->
+<!-- <footer style="position: fixed; bottom: 0px; text-align: center; width: 100%; height:40px; background-color: aliceblue;">
     <span style="color: black" class="footer-text"></span>
   </footer> -->
+
 </html>
