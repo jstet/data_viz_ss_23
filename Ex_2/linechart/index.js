@@ -1,5 +1,9 @@
-// Task 1 b): Verify that D3 is loaded correctly by printing the version number to the console
+//Names: 
+//  - Jonas Stettner
+//  - Ana Sanchez Acosta 
 
+// Task 1 b): Verify that D3 is loaded correctly by printing the version number to the console
+console.log("D3 Version:", d3.version)
 
 /**
  * IMPORTANT NOTICE:
@@ -22,6 +26,8 @@
 
 /* TASK 1 c): Retrieve (select) the visualization container node of the div element declared within the index.html by its identifier. */
 
+//d3.select("#vis-container")
+//We comented this out beacuse it done later (line 50)
 
 // Specify margins such that the visualization is clearly visible and no elements are invisible due to the svg border
 let margins = {
@@ -46,13 +52,13 @@ let svg = d3.select("#vis-container").append("svg").attr("width",width).attr("he
 
 let dataByYears = d3.group(data, (d) => d.Year);
 // Task 2 a) Describe what is happening in the code above? 
-// Answer:
+// Answer: It takes the data and groups it using the column (attribute) Year.
 
 console.log(typeof(dataByYears))
 
 let dataByYearsArray = Array.from(dataByYears);
 // Task 2 b) Describe what is happening in the code above?
-// Answer:
+// Answer: Is turning the grouped data into an Array so it can be iterarted over.
 console.log(dataByYearsArray)
 
 let avgData = [];
@@ -65,7 +71,10 @@ dataByYearsArray.forEach(year => {
     })
 })
 // Task 2 c) Describe what is happening in the code above?
-// Answer:
+// Answer: First initialize avgData Array. Then go over the years and fill the avgArray object with the attributed year, rain and temp.
+// year is the year of the group
+// rain takes the group(year) average of the attribute pr
+// temp takes the group(year) average of the attribute tas
 
 console.log("Average Data per Year:", avgData);
 
@@ -110,7 +119,7 @@ let visualization = viewport.append("g");
 let circles_rain = visualization.append("g").selectAll("circle")
     .data(avgData).enter().append("circle").attr("cx", (d) => timeScale(d.year))
     .attr("cy", (d) => rainfallScale(d.rain))
-    .attr("r", 5).attr("fill", "blue");
+    .attr("r", 3).attr("fill", "blue");
 
 
 
@@ -120,7 +129,7 @@ let circles_rain = visualization.append("g").selectAll("circle")
 let circles_temp = visualization.append("g").selectAll("circle")
     .data(avgData).enter().append("circle").attr("cx", (d) => timeScale(d.year))
     .attr("cy", (d) => temperatureScale(d.temp))
-    .attr("r", 5).attr("fill", "red");
+    .attr("r", 3).attr("fill", "red");
 
 
 
@@ -148,8 +157,8 @@ visualization.append("g").append("path").attr("d", lineGenerator_temp(avgData)).
 // Task 4
 // Lets add some axis (check https://github.com/d3/d3-axis for an example)
 let axisG = viewport.append("g");
-axisG.append('text').attr('class', 'axis-text').text('Temp').attr('x', 0).attr('y', 0).style('fill','red');
-axisG.append('text').attr('class', 'axis-text').text('Rain').attr('x', visWidth).attr('y', 0).style('fill','blue');
+axisG.append('text').attr('class', 'axis-text').text('Temperature').attr('x', -50).attr('y', -3).style('fill','red');
+axisG.append('text').attr('class', 'axis-text').text('Rain').attr('x', visWidth-15).attr('y', -3).style('fill','blue');
 axisG.append('text').attr('class', 'axis-text').text('Year').attr('x', visWidth/2).attr('y', visHeight+margins.bottom);
 
 // Add X Axis for years
