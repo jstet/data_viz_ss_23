@@ -100,7 +100,7 @@ function update(numbins) {
   var yAxis = d3.axisLeft().scale(yScale);
 
   viz.append("g").call(yAxis)
-  console.log(data)
+  //console.log(data)
 }
 
 // call update function with initial value to create visualization on first site visit
