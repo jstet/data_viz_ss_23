@@ -35,20 +35,20 @@ const visHeight = height - margin.top - margin.bottom
 const visWidth = width - margin.left - margin.right
 
 //TASK: get all dimensions in the dataset
-var allDimensions = TODO
+var allDimensions = Object.keys(data[0]);
 
 console.log("Dimensions of the dataset: ", allDimensions)
 
 //TASK: Data cleaning
 // filter out any datapoints where a value is undefined
 // 334 datapoints should remain
-var cleanData = TODO
+var cleanData = data.filter(d => !Object.values(d).some(val => val == undefined));
 
 console.log("cleaned Data:", cleanData.map(d => d.sex))
 
 //TASK: seperate numeric and ordinal dimensions
-var numerics = TODO
-var categoricals = TODO
+var numerics = ["culmen_length_mm", "culmen_depth_mm", "flipper_length_mm", "body_mass_g"];
+var categoricals = ["species", "island", "sex"];
 console.log("numerical dimensions", numerics)
 console.log("categorical dimensions", categoricals)
 
