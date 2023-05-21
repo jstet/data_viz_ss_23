@@ -86,7 +86,21 @@ var xLabel = d3.select('g#vis-g').append('text').attr('class', 'axis-label')
 // the select for the color should only have categorical dimensions as options
 // add an event listener to the <select> tag
 //    call the appropriate change function (xAxisChange(newDim), yAxisChange(newDim), colorChange(newDim) or sizeChange(newDim))
+const xSelect = d3.select('#x-axis-select');
+xSelect.on('change', function () { xAxisChange(d3.select(this).property("value")) })
+xSelect.selectAll('option').data(numerics).enter().append('option').text(function (d) { return d; });
 
+const ySelect = d3.select('#y-axis-select')
+ySelect.on('change', function () { yAxisChange(d3.select(this).property("value")) })
+ySelect.selectAll('option').data(numerics).enter().append('option').text(function (d) { return d; });
+
+const sizeSelect = d3.select('#size-select')
+sizeSelect.on('change', function () { sizeChange(d3.select(this).property("value")) })
+sizeSelect.selectAll('option').data(numerics).enter().append('option').text(function (d) { return d; });
+
+const colorSelect = d3.select('#color-select')
+colorSelect.selectAll('option').data(categoricals).enter().append('option').text(function (d) { return d; });
+colorSelect.on("change", function () { colorChange(d3.select(this).property("value")) })
 // TASK: x axis update:
 // Change the x Axis according to the passed dimension
 // update the cx value of all circles  
@@ -105,7 +119,8 @@ function xAxisChange(newDim) {
   points.attr("cx", (d) => xScale(d[newDim])).attr("r", 3)
 
   const xAxis = d3.axisBottom().scale(xScale);
-  viz.append("g").call(xAxis).attr("transform", "translate(0," + visHeight + ")").attr("id", "xAxis")
+  viz.append("g").call(xAxis).attr("transform", "translate(0," + visHeight + ")").attr("id", "xAxis");
+  xLabel.text(newDim)
 
 
 }
@@ -120,12 +135,14 @@ function yAxisChange(newDim) {
   const max_y = d3.max(cleanData, d => d[newDim])
   const yScale = d3.scaleLinear()
     .domain([min_y, max_y])
-    .range([0, visWidth]).nice();
+    .range([0, visWidth]);
 
   points.attr("cy", (d) => yScale(d[newDim]))
 
   const yAxis = d3.axisLeft().scale(yScale);
   viz.append("g").call(yAxis).attr("id", "yAxis")
+  yLabel.text(newDim)
+
 
 }
 
@@ -170,24 +187,6 @@ function colorChange(newDim) {
 
 }
 
-
-
-
-const xSelect = d3.select('#x-axis-select');
-xSelect.on('change', function () { xAxisChange(d3.select(this).property("value")) })
-xSelect.selectAll('option').data(numerics).enter().append('option').text(function (d) { return d; });
-
-const ySelect = d3.select('#y-axis-select')
-ySelect.on('change', function () { yAxisChange(d3.select(this).property("value")) })
-ySelect.selectAll('option').data(numerics).enter().append('option').text(function (d) { return d; });
-
-const sizeSelect = d3.select('#size-select')
-sizeSelect.on('change', function () { sizeChange(d3.select(this).property("value")) })
-sizeSelect.selectAll('option').data(numerics).enter().append('option').text(function (d) { return d; });
-
-const colorSelect = d3.select('#color-select')
-colorSelect.selectAll('option').data(categoricals).enter().append('option').text(function (d) { return d; });
-colorSelect.on("change", function () { colorChange(d3.select(this).property("value")) })
 
 
 
