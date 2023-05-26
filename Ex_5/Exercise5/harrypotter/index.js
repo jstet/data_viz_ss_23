@@ -106,10 +106,16 @@ d3.select("#house_checkbox").on("input", function () { updateGraph(d3.select(thi
     //draw a line for each link
         //the color of the link should be green when  the value is greater than 0, red when below 0
         //if the value is below 0, add a dash-array to the stroke
-    const node_data = newData.nodes;
+   
+    
     const link_data = newData.links;
+    let node_data=newData.nodes
+    node_data = node_data.filter(ar => link_data.find(rm => (rm.source === ar.id || rm.origin === ar.id) ))
+   
+    console.log(node_data)
 
-    graph.selectAll('.link').data(link_data).enter().append('line').attr('stroke', d => d.value > 0 ? 'green':'red').attr("stroke-dasharray",d => d.value < 0 ? '1 2 1':'1 1 1')
+
+    graph.selectAll('.link').data(link_data).enter().append("g").append('line').attr("class","link_line").attr('stroke', d => d.value > 0 ? 'green':'red').attr("stroke-dasharray",d => d.value < 0 ? '1 2 1':'1 1 1')
  
  
     //TASK 
@@ -120,34 +126,53 @@ d3.select("#house_checkbox").on("input", function () { updateGraph(d3.select(thi
             // color the circle according to the colorScale
         //add a text label
     
-    drag = d3.drag() .on('start',()=>{}) .on('drag',() =>{}) .on('end', ()=> {}) 
+    const drag = d3.drag().on('start',()=>{}).on('drag',() =>{}).on('end', ()=> {}) 
      
     graph.selectAll(".node")
     .data(node_data).enter()
     .append("g")
     .attr("class","node")
     .append("circle")
+    .attr("class","node_circle")
     .attr("r", d => d.count ? countScale(d.count) : 5)
-    .attr("fill", d => colorScale(d.house)).call(drag)
+    .attr("fill", d => colorScale(d.house))
 
-    d3.selectAll(".node").append("text").text(d => d.name).attr("y",-10).attr("x",0).attr("font-size","0.7rem")
+    d3.selectAll(".node").append("text").attr("class","node_text").text(d => d.name).attr("y",-10).attr("x",0).attr("font-size","0.7rem")
 
 
     // TASK
     // create a force Simulation ( https://github.com/d3/d3-force ) using the nodes and links
         //make sure the force is centered at the middle of your visualization 
-        //and the nodes do not overlap
+        //and the nodes do not overlap 
  
-    const sim = d3.forceSimulation(node_data).force('x', d3.forceX(visWidth/2)).force('y', d3.forceY(visHeight/2))
-    .force('charge', d3.forceManyBody().strength(-25))         
+    const simulation = d3.forceSimulation().force("center", d3.forceCenter(visWidth/2, visHeight/2))                  
+    .force("charge", d3.forceManyBody().strength(-1))
+    .force("link", d3.forceLink().id(d => d.id))
 
 
-    
+    simulation.nodes(node_data)
+    simulation.force("link").links(link_data)
 
-    // sim.on('tick', () => { node.attr('cx', d=>d.x) .attr('cy', d=>d.y) /*.attr('fill', d => d.r < 10 ? 'blue':'red')*/ }) 
-    d3.selectAll("circle").attr("y",d => d.y).attr("x",d => d.x)
-
-
+    simulation.on("tick",function(d){
+        
+        //position links
+        d3.selectAll(".link_line")
+          .attr("x1", d => d.source.x)
+          .attr("x2", d => d.target.x)
+          .attr("y1", d => d.source.y)
+          .attr("y2", d => d.target.y)
+       
+        //position nodes
+        d3.selectAll(".node_circle")
+          .attr("cx", d => d.x)
+          .attr("cy", d => d.y)
+        
+          d3.selectAll(".node_text")
+          .attr("x", d => d.x)
+          .attr("y", d => d.y)
+      })
+      
+      simulation.alpha(1).restart()
 }
  
  
