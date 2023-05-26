@@ -1,4 +1,4 @@
-const data = {
+const people = {
     "nodes": [
         {
             "bio": "Brother of Sirius. Used to be a Death Eater but defected.",
@@ -1984,3 +1984,5 @@ const data = {
         }
     ]
 }
+
+
