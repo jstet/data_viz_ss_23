@@ -1,0 +1,25 @@
+#cont{
+    display: flex;
+    gap: 12px;
+}
+
+.vis-container{
+border: black 1px solid;
+position: relative;
+
+}
+
+
+.title-centered{
+    text-align:center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.legend{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 20px;
+
+}
