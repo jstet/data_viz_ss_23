@@ -82,9 +82,7 @@ const tooltip = d3.select("#vis-container-stacked").append("div").attr("id", "to
     .style("width", "200px");
 
 const mouseover = function (event, d) {
-    console.log(d)
     var subgroupName = d3.select(this.parentNode).datum().key;
-    console.log(d)
     var subgroupValue = d.data[subgroupName];
     d3.select('#tooltip').style("visibility", "visible").html(`Store: ${d.data.name}<br /> Departement:  ${subgroupName}<br /> Revenue: ${subgroupValue}`)
 }
@@ -160,7 +158,7 @@ viewport_gr.append("g")
     .attr("width", xSubgroup.bandwidth())
     .attr("height", function (d) { return visHeight - yGrouped(d.value); })
     .attr("fill", function (d) { return color(d.key); })
-    .on("mouseover", function(event,d) {console.log(d); d3.select('#tooltip').style("visibility", "visible").html(`Store: ${d.store}<br /> Departement:  ${d.key}<br /> Revenue: ${d.value}`)})
+    .on("mouseover", function(event,d) {d3.select('#tooltip').style("visibility", "visible").html(`Store: ${d.store}<br /> Departement:  ${d.key}<br /> Revenue: ${d.value}`)})
     .on('mousemove', (event, d) => {
         d3.select('#tooltip')
             .style('left', (event.pageX + 10) + 'px')
