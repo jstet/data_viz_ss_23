@@ -151,8 +151,8 @@ function updateGraph(check) {
     if (!event.active) {
       simulation.alphaTarget(0);
     }
-    d.fx = null;
-    d.fy = null;
+    d.fx = event.x;
+    d.fy = event.y;
   }
 
     graph.selectAll(".node")
