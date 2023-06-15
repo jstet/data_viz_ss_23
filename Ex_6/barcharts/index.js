@@ -78,9 +78,11 @@ const tooltip = d3.select("#vis-container-stacked").append("div").attr("id", "to
     .style("border", "solid")
     .style("border-width", "2px")
     .style("border-radius", "5px")
-    .style("padding", "5px");
+    .style("padding", "5px")
+    .style("width", "200px");
 
 const mouseover = function (event, d) {
+    console.log(d)
     var subgroupName = d3.select(this.parentNode).datum().key;
     console.log(d)
     var subgroupValue = d.data[subgroupName];
@@ -140,6 +142,9 @@ var xSubgroup = d3.scaleBand()
     .range([0, xScale.bandwidth()])
     .padding([0.05])
 
+
+    
+
 viewport_gr.append("g")
     .selectAll("g")
     // Enter in data = loop group per group
@@ -148,13 +153,20 @@ viewport_gr.append("g")
     .append("g")
     .attr("transform", function (d) { return "translate(" + xScale(d.name) + ",0)"; })
     .selectAll("rect")
-    .data(function (d) { return subgroups.map(function (key) { return { key: key, value: d[key] }; }); })
+    .data(function (d) { return subgroups.map(function (key) { return { key: key, value: d[key], store: d.name }; }); })
     .enter().append("rect")
     .attr("x", function (d) { return xSubgroup(d.key); })
     .attr("y", function (d) { return yGrouped(d.value); })
     .attr("width", xSubgroup.bandwidth())
     .attr("height", function (d) { return visHeight - yGrouped(d.value); })
-    .attr("fill", function (d) { return color(d.key); });
+    .attr("fill", function (d) { return color(d.key); })
+    .on("mouseover", function(event,d) {console.log(d); d3.select('#tooltip').style("visibility", "visible").html(`Store: ${d.store}<br /> Departement:  ${d.key}<br /> Revenue: ${d.value}`)})
+    .on('mousemove', (event, d) => {
+        d3.select('#tooltip')
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY + 10) + 'px')
+    })
+    .on("mouseout", () => { tooltip.style("visibility", "hidden") });
 
 
 
