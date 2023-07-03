@@ -95,6 +95,7 @@ selection
 // define d3.brush (see https://github.com/d3/d3-brush)
 // and define its event handling
 // add brush selection to the predefined variable brush_area
+// see code under: we did everything in one step 
 
 
 //TODO:
@@ -111,13 +112,7 @@ brush_area.call(d3.brush()                     // Add the brush feature using th
       })
   }))
 
-function isBrushed(brush_coords, cx, cy) {
-  var x0 = brush_coords[0][0],
-    x1 = brush_coords[1][0],
-    y0 = brush_coords[0][1],
-    y1 = brush_coords[1][1];
-  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
-}
+
 
 
 //TODO:
@@ -190,3 +185,10 @@ function createBar(data) {
 //TODO:
 //create function which returns a boolean value...
 //stating if the cx and cy is located within the brushed area
+function isBrushed(brush_coords, cx, cy) {
+  var x0 = brush_coords[0][0],
+    x1 = brush_coords[1][0],
+    y0 = brush_coords[0][1],
+    y1 = brush_coords[1][1];
+  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+}
