@@ -177,11 +177,6 @@ function createBar(data) {
 
 }
 
-
-
-
-
-
 //TODO:
 //create function which returns a boolean value...
 //stating if the cx and cy is located within the brushed area
