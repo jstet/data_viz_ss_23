@@ -1,3 +1,5 @@
+
+
 const width = 600;
 const height = 600;
 const margin = {
@@ -7,8 +9,20 @@ const margin = {
   bottom: 50,
 };
 
-const chart = d3.select('svg#chart')
-d3.select('svg#chart').attr('width', width).attr('height', height)
+console.log("hz")
 
-const visHeight = height - margin.top - margin.bottom
-const visWidth = width - margin.left - margin.right
+const chart = d3.select('svg#chart')
+
+// Dimension of the whole chart. Only one size since it has to be square
+const marginWhole = {top: 10, right: 10, bottom: 10, left: 10}
+const sizeWhole = 640 - marginWhole.left - marginWhole.right
+
+// Create the svg area
+const svg = chart.attr("width", sizeWhole  + marginWhole.left + marginWhole.right)
+    .attr("height", sizeWhole  + marginWhole.top + marginWhole.bottom)
+  .append("g")
+    .attr("transform", `translate(${marginWhole.left},${marginWhole.top})`);
+
+const csv = fs.readFileSync("./data/imports-95.data", "utf8");
+const data =d3.csvParse(csv);
+console.log(data);
