@@ -1,0 +1,10 @@
+.cell{
+    outline: solid 2px black;
+    outline-offset: 0;
+}
+
+.buttons{
+    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-left: 20px
+}
