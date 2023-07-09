@@ -139,7 +139,8 @@ function drawGraph(correlType) {
 
                             tmp.append("text")
                                 .attr("class", "y label")
-                                .attr("text-anchor", "end")
+                                .attr("text-anchor", "middle")
+                                .attr("x",-realSize/2)
                                 .attr("y", -marginWhole.left - innerMargin)
                                 .attr("dy", ".75em")
                                 .attr("transform", "rotate(-90)")
@@ -147,7 +148,8 @@ function drawGraph(correlType) {
 
                             tmp.append("text")
                                 .attr("class", "x label")
-                                .attr("text-anchor", "start")
+                                .attr("text-anchor", "middle")
+                                .attr("x",realSize/2)
                                 .attr("y", -marginWhole.left - innerMargin)
                                 .attr("dy", ".75em")
                                 .text(colIndex);
@@ -179,30 +181,68 @@ function drawGraph(correlType) {
                         const y = d3.scaleLinear()
                             .domain(yextent).nice()
                             .range([realSize, 0]);
-
+                       
                         // Add a 'g' at the right position
                         const tmp = svg
                             .append('g')
-                            .attr("transform", `translate(${position(rowIndex) + innerMargin},${position(colIndex) + innerMargin})`);
+                            .attr("transform", `translate(${position(rowIndex) + innerMargin},${position(colIndex) + innerMargin})`)
+                           ;
 
                         if (i == 0) {
                             tmp.append("text")
                                 .attr("class", "y label")
-                                .attr("text-anchor", "end")
+                                .attr("text-anchor", "middle")
+                                .attr("x",-realSize/2)
                                 .attr("y", -marginWhole.left - innerMargin)
                                 .attr("dy", ".75em")
                                 .attr("transform", "rotate(-90)")
                                 .text(colIndex);
                         }
-
+                        
                         // Add circle
-                        tmp.append("g").attr("class", "cell")
-                            .selectAll("myCircles")
-                            .data(data)
-                            .join("circle")
-                            .attr("cx", function (d) { return x(+d[rowIndex]) })
-                            .attr("cy", function (d) { return y(+d[colIndex]) })
-                            .attr("r", 3)
+                                                    //Define fuctions 
+                        let mouseover_funct= function(d) {
+
+                        tmp.append("text")
+                        .attr("class", "y-m-label")
+                        .attr("text-anchor", "middle")
+                        .attr("x",-realSize/2)
+                        .attr("y", -marginWhole.left - innerMargin)
+                        .attr("dy", ".75em")
+                        .attr("transform", "rotate(-90)")
+                        .text(colIndex)
+                    
+                        tmp.append("text")
+                            .attr("class", "x-m-label")
+                            .attr("text-anchor", "middle")
+                            .attr("x",realSize/2)
+                            .attr("y", realSize)
+                            .attr("dy", ".75em")
+                            .text(rowIndex)
+
+
+                        }
+                        let mouse_leave_funct= function(d) {
+                            d3.selectAll(".x-m-label").remove()
+                            d3.selectAll(".y-m-label").remove()
+                            console.log("works")
+                        }
+
+                        tmp.append("g")
+                        .attr("class", "cell")
+                        //I thought this way one append the event litener to the parent class
+                        .on("mouseover", mouseover_funct)
+                        .on("mouseleave", mouse_leave_funct)
+                        .selectAll("myCircles")
+                        .data(data)
+                        .join("circle")
+                        //.attr("class", "scatterplot-circle")
+                        .attr("cx", function (d) { return x(+d[rowIndex]); })
+                        .attr("cy", function (d) { return y(+d[colIndex]); })
+                        .attr("r", 3)
+;
+                       
+                        
 
                     }
                     else {
@@ -221,16 +261,19 @@ function drawGraph(correlType) {
                         if (j == 0) {
                             tmp.append("text")
                                 .attr("class", "x label")
-                                .attr("text-anchor", "start")
+                                .attr("text-anchor", "middle")
+                                .attr("x",realSize/2)
                                 .attr("y", -marginWhole.left - innerMargin)
                                 .attr("dy", ".75em")
                                 .text(rowIndex);
                         }
+
+
                         tmp.append("g").attr("class", "cell").append('rect')
                             .attr('width', realSize)  // Set the desired width of the rectangle
                             .attr('height', realSize)  // Set the desired height of the rectangle
                             .style('fill', 'none')
-
+                            
 
                         tmp
                             .append('text')
@@ -242,6 +285,7 @@ function drawGraph(correlType) {
                     }
                 }
             }
+
         })
         .catch(function (error) {
             // Handle any errors that occur during loading/parsing
