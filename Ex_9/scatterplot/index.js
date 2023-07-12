@@ -76,7 +76,7 @@ function drawGraph(correlType) {
         .append("g")
         .attr("transform", `translate(${marginWhole.left},${marginWhole.top})`);
 
-    d3.csv("https://raw.githubusercontent.com/jstet/data_viz_ss_23/main/Ex_9/data/data.csv")
+    d3.csv("https://raw.githubusercontent.com/jstet/data_viz_ss_23/main/Ex_9/scatterplot/data/data.csv")
         .then(function (data) {
             // Process the data here
             console.log(data)
