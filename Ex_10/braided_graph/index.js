@@ -1,8 +1,8 @@
-const width = 800;
+const width = 900;
 const height = 500;
 const margins = {
     left: 50,
-    right: 50,
+    right: 100,
     top: 50,
     bottom: 50,
 };
@@ -57,6 +57,23 @@ const yScale = d3.scaleLinear()
 svg.append("g")
     .call(d3.axisLeft(yScale));
 
+svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .attr("y", -10)
+    .attr("x", 0)
+    .attr("font-size", "12")
+    .text("Closing Value");
+
+    svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "start")
+    .attr("y", visHeight)
+    .attr("x", visWidth+10)
+    .attr("font-size", "12")
+    .text("Date");
+
+
 const color = d3.scaleOrdinal()
     .domain(Object.keys(groupedData[0]).slice(1))
     .range(d3.schemeCategory10);
@@ -92,26 +109,10 @@ groups.each(function (d, i) {
 
 })
 
+const legend = d3.select("#legend").selectAll("div").data(names).enter().append("div").attr("style", "padding: 10px");
 
-// gElements.each(function (dayData, i) {
-//     const stocks = Object.keys(dayData).slice(1); // Exclude 'date' key
-//     stocks.forEach((stock, j) => {
-//         const nextStock = stocks[j + 1];
-//         if (nextStock) {
-//             const higherStock = dayData[stock] > dayData[nextStock] ? stock : nextStock;
-//             const smallerStock = dayData[stock] > dayData[nextStock] ? nextStock : stock;
-// 
-//             // Plot the higher value first
-//             d3.select(this)
-//                 .append("path")
-//                 .datum([dayData[higherStock], dayData[smallerStock]])
-//                 .attr("fill", "none")
-//                 .attr("stroke", "black")
-//                 .attr("d", d3.line()
-//                     .x((d, i) => xScale(i))
-//                     .y((d, i) => yScale(d))
-//                 );
-//         }
-//     });
-// });
-
+legend.each(function (d){
+    el = d3.select(this)
+    el.append("span").attr("style", "display: inline-block; width: 13px; height: 13px; margin-right: 5px; background-color: " + color(d) + ";")
+    el.append("span").text(d)
+})
