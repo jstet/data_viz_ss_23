@@ -16,13 +16,11 @@ const svg = d3.select('#viz')
     .append("g")
     .attr("transform", `translate(${margins.left}, ${margins.top})`);
 
-// Format date
 const formattedData = data.map(item => {
     const jsDate = new Date(item.date);
     return { ...item, date: jsDate };
 });
 
-// Group data by date
 const groupedData = Array.from(d3.group(formattedData, d => d.date), ([date, values]) => {
     const obj = { date };
     values.forEach(d => {
@@ -35,9 +33,6 @@ console.log(groupedData);
 
 const names = Object.keys(groupedData[0]).slice(1)
 console.log(names)
-
-// const stack = d3.stack().keys(Object.keys(groupedData[0]).slice(1));
-// const stackedData = stack(groupedData);
 
 const xScale = d3.scaleTime()
     .domain(d3.extent(formattedData, function (d) { return d.date; }))
@@ -105,8 +100,6 @@ groups.each(function (d, i) {
                 ).attr("style", "shape-rendering: crispEdges");
         }
     })
-
-
 })
 
 const legend = d3.select("#legend").selectAll("div").data(names).enter().append("div").attr("style", "padding: 10px");
